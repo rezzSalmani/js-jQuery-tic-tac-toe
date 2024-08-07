@@ -1,0 +1,180 @@
+@import url(normalize.css);
+body {
+  background-color: #85ffbd;
+  background-image: linear-gradient(45deg, #85ffbd 0%, #fffb7d 100%);
+  font-family: "Poppins", sans-serif;
+  color: #424242;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+h4 {
+  margin: 0;
+}
+.signUp {
+  width: 300px;
+  border: 1px solid #c8e6c9;
+  padding: 1rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(1.5px);
+  transition: all 0.3s ease-in;
+  border-radius: 12px;
+  opacity: 100;
+  visibility: visible;
+  transition: all 0.3s ease-in;
+}
+
+.player-section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  gap: 4px;
+}
+
+input,
+select,
+button {
+  outline: none;
+  border-radius: 8px;
+  border: 1px solid #c8e6c9;
+  padding: 4px 8px;
+}
+.start-game {
+  width: 100%;
+  margin-top: 1rem;
+  transition: all 0.2s ease-in;
+}
+.start-game:hover {
+  background-color: #c8e6c9;
+}
+
+.mainBoard {
+  width: fit-content;
+  height: fit-content;
+  opacity: 100;
+  visibility: visible;
+  transition: all 0.3s ease-in;
+}
+.boardInfo {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 1rem;
+}
+.title {
+  font-size: larger;
+  font-weight: 600;
+}
+
+.player-turn span {
+  display: flex;
+  justify-content: center;
+}
+.board {
+  background-color: #85ffbd;
+  background-image: linear-gradient(45deg, #85ffbd 0%, #fffb7d 100%);
+  width: fit-content;
+  height: fit-content;
+  border-radius: 18px;
+  border: 1px solid #bdbdbd;
+  overflow: hidden;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px);
+}
+.hideBox {
+  opacity: 0;
+  visibility: hidden;
+  width: 0;
+  padding: 0;
+}
+.board-section {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.cell {
+  border: 1px solid #bdbdbd;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.cell .circle,
+.cell .x {
+  width: 100%;
+  height: 100%;
+}
+
+.cell.x,
+.cell.circle {
+  cursor: not-allowed;
+}
+
+.cell.circle::before,
+.board.circle .cell:not(.x):not(.circle):hover::before {
+  position: absolute;
+  margin: 1rem;
+  inset: 0;
+  content: " ";
+  border: 8px solid #424242;
+  border-radius: 100%;
+}
+
+.cell.x::after,
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+  position: absolute;
+  margin: 1rem;
+  content: "";
+  inset: 0;
+  margin: auto;
+  width: 100%;
+  height: 4px;
+  border-radius: 8px;
+  background-color: #424242;
+  transition: all 0.3s ease-in-out;
+}
+
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before {
+  transform: rotate(45deg);
+  transition: all 0.3s ease-in-out;
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after {
+  transform: rotate(-45deg);
+}
+
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+  background-color: lightgrey;
+}
+.board.circle .cell:not(.x):not(.circle):hover::before {
+  border: 8px solid lightgrey;
+}
+.end-game-dialog {
+  position: absolute;
+  inset: 0;
+  width: 300px;
+  height: 150px;
+  background-color: #fff;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(1.5px);
+  transition: all 0.3s ease-in;
+  background-color: #85ffbd;
+  background-image: linear-gradient(45deg, #85ffbd 0%, #fffb7d 100%);
+}
