@@ -55,9 +55,6 @@ button {
 .mainBoard {
   width: fit-content;
   height: fit-content;
-  opacity: 100;
-  visibility: visible;
-  transition: all 0.3s ease-in;
 }
 .boardInfo {
   display: flex;
@@ -90,6 +87,7 @@ button {
   visibility: hidden;
   width: 0;
   padding: 0;
+  margin: 0;
 }
 .board-section {
   display: flex;
@@ -163,7 +161,7 @@ button {
 .board.circle .cell:not(.x):not(.circle):hover::before {
   border: 8px solid lightgrey;
 }
-.end-game-dialog {
+.end-game-modal {
   position: absolute;
   inset: 0;
   width: 300px;
@@ -177,4 +175,22 @@ button {
   transition: all 0.3s ease-in;
   background-color: #85ffbd;
   background-image: linear-gradient(45deg, #85ffbd 0%, #fffb7d 100%);
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  overflow: hidden;
+}
+.end-game-dialog h4 {
+  font-weight: 600;
+  font-size: larger;
+}
+.restart-btn {
+  cursor: pointer;
+  padding: 6px 12px;
+}
+dialog[open] {
+  display: flex;
 }

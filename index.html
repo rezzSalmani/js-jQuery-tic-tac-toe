@@ -12,8 +12,10 @@
 </head>
 
 <body>
+
+
     <div class="signUp">
-        <h2>Choose your Role</h2>
+        <h2>Welcome to Tic Tac Toe</h2>
         <form id="from-game">
             <div class="player-section">
                 <h4>Player 1</h4>
@@ -23,7 +25,7 @@
                 <select name="player-one-role-holder" id="player-one-role-holder">
                     <option value="">Choose one</option>
                     <option value="x">X</option>
-                    <option value="O">O</option>
+                    <option value="circle">O</option>
                 </select>
             </div>
             <div class="player-section">
@@ -34,13 +36,13 @@
                 <select name="player-two-role-holder" id="player-two-role-holder">
                     <option value="">Choose one</option>
                     <option value="x">X</option>
-                    <option value="O">O</option>
+                    <option value="circle">O</option>
                 </select>
             </div>
             <button type="submit" class="start-game">Start</button>
         </form>
     </div>
-    <div class="mainBoard">
+    <div class="mainBoard" style="display: none;">
         <div class="boardInfo">
             <div>
                 <div>
@@ -68,7 +70,7 @@
             </div>
 
         </div>
-        <div class="board ">
+        <div class="board">
             <div class="board-section">
                 <div class="cell"></div>
                 <div class="cell"></div>
@@ -86,7 +88,7 @@
             </div>
         </div>
     </div>
-    <dialog class="end-game-dialog">
+    <dialog class="end-game-modal">
         <h4>The <span class="winner-holder">X</span> Team Won The Game</h4>
         <span>🎊 Congratulation 🎉</span>
         <button class="restart-btn">Restart</button>

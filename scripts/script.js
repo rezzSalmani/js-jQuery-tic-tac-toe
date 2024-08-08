@@ -12,14 +12,28 @@ $(function () {
   const board = $(".board");
   const cells = $(".cell");
   const fromSubmit = $("#from-game");
-  const playerOneName = $(".player-one-name");
-  const playerTwoName = $(".player-two-name");
-  const playerOneRole = $(".player-one-role");
-  const playerTwoRole = $(".player-two-role");
+  const restartGame = $(".restart-btn");
+  const pOneName = $(".player-one-name");
+  const pTwoName = $(".player-two-name");
+  const pOneRole = $(".player-one-role");
+  const pTwoRole = $(".player-two-role");
   const xValue = "x";
   const circleValue = "circle";
-  let circleTurn, winner;
-  let player1, player2;
+  let playerTurn, winner;
+  let firstPlayer, secondPlayer;
+  let firstRole, secondRole;
+
+  const startGame = () => {
+    playerTurn = firstRole;
+    winner = null;
+    cells.each(function () {
+      $(this).removeClass(xValue);
+      $(this).removeClass(circleValue);
+      $(this).click(handleClick);
+    });
+    insertPlayerTurn();
+    playerTurnHandler();
+  };
 
   fromSubmit.on("submit", function (event) {
     event.preventDefault();
@@ -32,53 +46,55 @@ $(function () {
       data[`player-two-role-holder`]
     ) {
       if (data[`player-one-role-holder`] !== data[`player-two-role-holder`]) {
-        $(".signUp").addClass("hideBox");
-        setTimeout(() => {
-          $(".mainBoard").removeClass("hideBox");
-        }, 1000);
-        playerOneName.text(data[`player-one-name-holder`]);
-        playerTwoName.text(data[`player-two-name-holder`]);
-        playerOneRole.text(data[`player-one-role-holder`]);
-        playerTwoRole.text(data[`player-two-role-holder`]);
-        player1 = data[`player-one-name-holder`];
-        player2 = data[`player-two-name-holder`];
+        $(".signUp").fadeOut(500, function () {
+          $(".mainBoard").fadeIn(500);
+        });
+
+        firstRole = data[`player-one-role-holder`];
+        secondRole = data[`player-two-role-holder`];
+
+        firstPlayer = data[`player-one-name-holder`];
+        secondPlayer = data[`player-two-name-holder`];
+
+        pOneName.text(firstPlayer);
+        pTwoName.text(secondPlayer);
+        pOneRole.text(firstRole === "x" ? "X" : "O");
+        pTwoRole.text(secondRole === "circle" ? "O" : "X");
+
         startGame();
+        setTimeout(() => {
+          event.target.reset();
+        }, 1000);
       }
     }
   });
-
-  const startGame = () => {
-    circleTurn = player1;
-    winner = null;
-    cells.each(function () {
-      $(this).removeClass(xValue);
-      $(this).removeClass(circleValue);
-      $(this).click(handleClick);
-    });
-    insertPlayerTurn();
-    playerTurnHandler();
-  };
 
   function handleClick() {
     if (
       !this.classList.contains(circleValue) &&
       !this.classList.contains(xValue)
     ) {
-      const playerTurn = circleTurn ? circleValue : xValue;
-
-      circleTurn ? this.classList.add(circleValue) : this.classList.add(xValue);
-      console.log(isWin(playerTurn));
+      this.classList.add(playerTurn);
+      // check win
       if (isWin(playerTurn)) {
-        winner = circleTurn ? player2 : player1;
-        alert(`the ${winner} win the game`);
-
-        $(".winner-holder").text(winner);
-        $(".end-game-dialog").attr("open", "true");
-        $(".mainBoard").addClass("hideBox");
+        winner = playerTurn === firstRole ? firstPlayer : secondPlayer;
+        $(".mainBoard").fadeOut(1000, function () {
+          $(".winner-holder").text(winner);
+          $(".end-game-modal")[0].showModal();
+        });
       } else if (isDraw()) {
-        alert("end Game its draw");
+        // check draw
+        $(".mainBoard").fadeOut(1000, function () {
+          $(".end-game-modal h4").replaceWith(`<h4> It is a Draw </h4>`);
+          $(".end-game-modal span").replaceWith(
+            `<span>Try Play again 👀 </span>`
+          );
+          $(".end-game-modal")[0].showModal();
+        });
       } else {
-        circleTurn = !circleTurn;
+        // change turn
+        playerTurn = playerTurn === firstRole ? secondRole : firstRole;
+
         insertPlayerTurn();
         playerTurnHandler();
       }
@@ -87,7 +103,7 @@ $(function () {
   function playerTurnHandler() {
     board.removeClass(xValue);
     board.removeClass(circleValue);
-    circleTurn ? board.addClass(circleValue) : board.addClass(xValue);
+    board.addClass(playerTurn);
   }
 
   function isWin(playerTurn) {
@@ -109,9 +125,16 @@ $(function () {
     );
   }
   function insertPlayerTurn() {
+    const playerName = playerTurn === firstRole ? firstPlayer : secondPlayer;
     $(".player-turn")
       .find(".title")
-      .text(`${circleTurn ? player2 : player1 || "unknown"}'s`);
+      .text(`${playerName || "unknown"}'s`);
   }
-  function endGame() {}
+  restartGame.click(function () {
+    $(".end-game-modal")[0].close();
+    $(".signUp").fadeIn(500);
+    playerTurn, winner;
+    firstPlayer, secondPlayer;
+    firstRole, secondRole;
+  });
 });
